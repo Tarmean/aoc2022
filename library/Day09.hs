@@ -9,6 +9,7 @@ import Data.Ord (comparing)
 import Data.Foldable (minimumBy)
 import Control.Lens
 import Data.List (maximumBy)
+import Control.Monad.Zip (MonadZip(mzipWith))
 
 
 
@@ -24,15 +25,10 @@ moveSnake (S m) d = S m'
     step1 0 p = p + d
     step1 i p 
       | not (outOfCycle p newP) = p
-      | newP ^. _y == p ^. _y = p & _x +~ signum ((newP ^. _x) - (p ^. _x))
-      | newP ^. _x == p ^. _x = p & _y +~ signum ((newP ^. _y) - (p ^. _y))
-      | otherwise = nearestNeighbour newP p
-      where newP = m' M.! (i - 1)
-
-candidates :: Point -> [Point]
-candidates p = [p + V2 x y | x <- [-1..1], y <- [-1..1], x /= 0 && y /= 0]
-nearestNeighbour :: Point -> Point -> Point
-nearestNeighbour p1 p2 = minimumBy (comparing (taxi p1))  $ candidates p2
+      | otherwise = mzipWith move p newP
+      where
+        newP = m' M.! (i - 1)
+        move a b = signum (b-a) + a
 
 outOfCycle :: Point -> Point -> Bool
 outOfCycle a b = 1 < taxi a b
