@@ -48,6 +48,7 @@ library:
   - QuickCheck
   - data-interval 
   - megaparsec
+  - linear
 
   source-dirs: library
 

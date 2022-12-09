@@ -26,23 +26,36 @@ visible ls = zipWith (>) ls ((-1) : scanl1 max ls)
 
 belowOrientations :: ([[a]] -> [[b]]) -> [[a]] -> [[[b]]]
 belowOrientations f ls =  do
-  SomeTrans l r <- orientations
+  SomeTrans l r <- orientations -- this line typechecks
   pure $ r (f (l ls))
-data SomeTrans = SomeTrans { runTrans :: forall x. ([[x]] -> [[x]]), revtrans :: forall x. ([[x]] -> [[x]]) }
+data SomeTrans = SomeTrans (forall x. ([[x]] -> [[x]])) (forall y. ([[y]] -> [[y]]))
 orientations :: [SomeTrans]
-orientations = [someTrans id, someTrans transpose, someTrans $ fmap reverse, SomeTrans (fmap reverse . transpose ) (transpose . fmap reverse)]
+orientations = [someTrans id, someTrans transpose, someTrans (fmap reverse), SomeTrans (fmap reverse . transpose) (transpose . fmap reverse)]
   where
     someTrans :: (forall x. [[x]] -> [[x]]) -> SomeTrans
     someTrans a = SomeTrans a a
+
+belowOrientations' :: ([[a]] -> [[b]]) -> [[a]] -> [[[b]]]
+belowOrientations' f ls =  do
+  -- (l, r)::SomeTrans' <- orientations' -- this line does not typecheck
+  orientations' >>= \(l,r) -> -- this line typechecks
+   pure $ r (f (l ls))
+type SomeTrans' = (forall x. ([[x]] -> [[x]]), forall y. ([[y]] -> [[y]]))
+orientations' :: [SomeTrans']
+orientations' = [someTrans id, someTrans transpose, someTrans (fmap reverse), (fmap reverse . transpose,transpose . fmap reverse)]
+  where
+    someTrans :: (forall x. [[x]] -> [[x]]) -> SomeTrans'
+    someTrans a = (a, a)
+
 
 toPosition :: (a -> Bool) -> [[a]] -> S.Set (Int, Int)
 toPosition p ls = S.fromList [ (x, y) | (y, row) <- zip [0..] ls, (x, v) <- zip [0..] row, p v]
 
 
-test :: IO ()
-test = quickCheck $ \(ls::[[Int]]) -> all (not . null) ls ==> and $ do
-  SomeTrans l r <- orientations
-  pure $ ls == r ( l ls)
+-- test :: IO ()
+-- test = quickCheck $ \(ls::[[Int]]) -> all (not . null) ls ==> and $ do
+--   (l, r) <- undefined -- orientations'
+--   pure $ ls == r ( l ls)
 
 
 
@@ -77,3 +90,4 @@ main = do
   print $  S.size . solve1 $ map T.unpack $ T.lines inp
   let vecs = V.fromList . map digitToInt $ concatMap T.unpack $ T.lines inp
   print $ take 10 $ sortOn  (Down . snd) $ posScores vecs
+
