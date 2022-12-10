@@ -28,6 +28,7 @@ ghc-options:
 - -Wmissing-home-modules
 - -Wpartial-fields
 - -Wredundant-constraints
+- -XGHC2021
 default-extensions:
   - QuasiQuotes
 library:

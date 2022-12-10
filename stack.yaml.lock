@@ -3,7 +3,25 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    commit: 37cbd924cb71eba591a2e2b6b131767f632d22c9
+    git: https://github.com/haskell/mtl
+    name: mtl
+    pantry-tree:
+      sha256: 7bf71ccd1c70004019046145c76f81409a6c9e45155df2a4db4c6e348e91e343
+      size: 2088
+    version: 2.3.1
+  original:
+    commit: 37cbd924cb71eba591a2e2b6b131767f632d22c9
+    git: https://github.com/haskell/mtl
+- completed:
+    hackage: exceptions-0.10.5@sha256:b2c634a95ba2a68e0df3ae67d006f0dabb02edbe4dc77b321133551e308ca047,2832
+    pantry-tree:
+      sha256: 55b1a4123104e57b5e72b1c5354408807beded8a52ff1900521fed7007812715
+      size: 738
+  original:
+    hackage: exceptions-0.10.5@sha256:b2c634a95ba2a68e0df3ae67d006f0dabb02edbe4dc77b321133551e308ca047,2832
 snapshots:
 - completed:
     sha256: 5201b267da5c16bde723e0401eed332c96035edd55250a947089a7d9417b7ecc
