@@ -50,6 +50,7 @@ library:
   - data-interval 
   - megaparsec
   - linear
+  - peggy
 
   source-dirs: library
 

@@ -22,6 +22,24 @@ packages:
       size: 738
   original:
     hackage: exceptions-0.10.5@sha256:b2c634a95ba2a68e0df3ae67d006f0dabb02edbe4dc77b321133551e308ca047,2832
+- completed:
+    commit: ae8d7178820bc312777e3ea5c5ec129c6a5e2914
+    git: https://github.com/Tarmean/Peggy
+    name: peggy
+    pantry-tree:
+      sha256: f334c91e88ce3829504fffddb20d70c75feef01125294fc8b48b1058745bc8f6
+      size: 1939
+    version: 0.3.3
+  original:
+    commit: ae8d7178820bc312777e3ea5c5ec129c6a5e2914
+    git: https://github.com/Tarmean/Peggy
+- completed:
+    hackage: happy-1.21.0@sha256:1dc09b68d46fed691d9969f8f7bd8d83cf3252491709d6fb070e7cfec9a5cabe,6326
+    pantry-tree:
+      sha256: 3a84541bd92963b14e34d8364112bed677145d6a17d1d0055cbffe5a6541cc00
+      size: 8312
+  original:
+    hackage: happy-1.21.0
 snapshots:
 - completed:
     sha256: 5201b267da5c16bde723e0401eed332c96035edd55250a947089a7d9417b7ecc
