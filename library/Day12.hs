@@ -2,31 +2,41 @@
 module Day12 where
 
 import qualified Data.Map as M
-import Control.Monad.State
-import Debug.Trace (trace)
+import Control.Monad.State.Strict
+import Control.Monad.Heap
 import qualified Data.Set as S
-import Data.Maybe (catMaybes)
+import Control.Monad (guard, unless)
+import Data.Monoid (Sum(..))
+import Control.Monad.Writer (MonadWriter(tell))
+import Control.Applicative (asum)
 
 data BFSConfig a = BFSConfig { neighbours :: a -> [a]
                             , goal :: a
-                            , source :: a
+                            , source :: [a]
                             }
 
-type M a = State (M.Map a Int)
+type M a = HeapT (Sum Int) (State (S.Set a))
 
-
-bfsSearch :: (Show a, Ord a) => BFSConfig a -> M.Map a Int
-bfsSearch BFSConfig{..} = go mempty (S.singleton source) 0
+bfsSearch :: (Ord a) => BFSConfig a -> [Sum Int]
+bfsSearch BFSConfig{..} = runM (pick source >>= go)
   where
-    go vis ls _ | S.null ls = vis
-    go vis curs dist = go vis' next' dist'
-      where
-        next = S.fromList $ concatMap neighbours curs
-        next' = S.filter (not . (`M.member` vis')) next
-        dist' = dist + 1
-        vis' = M.union vis $ M.fromList $ zip (S.toList curs) $ repeat dist
+    go cur = unless (cur == goal) $ do
+        next <- pick (neighbours cur)
+        tell (Sum 1)
+        go next
+    runM = fmap snd . flip evalState mempty . searchT
 
--- getBFSResult :: (Ord a) => BFSConfig a -> Int
+unique :: Ord a => a -> M a a
+unique x = do
+  unseen <- gets (S.notMember x)
+  guard unseen
+  modify (S.insert x)
+  pure x
+{-# INLINE unique #-}
+pick :: Ord a => [a] -> M a a
+pick = asum . map unique
+{-# INLINE pick #-}
+
 type Pos = (Int, Int)
 toGrid :: [String] -> M.Map Pos Char
 toGrid ls = M.fromList [( (y, x), c) | (y, row) <- zip [0..] ls, (x, c) <- zip [0..] row]
@@ -46,15 +56,16 @@ getEnd grid = head $ M.keys $ M.filter (== 'E') grid
 normStartEnd :: M.Map Pos Char -> M.Map Pos Char
 normStartEnd grid = M.insert (getEnd grid) 'z' $ M.insert (getStart grid) 'a' grid
 
--- part1 :: [String] -> Int
-part1 ls = minimum $ catMaybes [ bfsSearch BFSConfig{..} M.!? goal | source <- posSources ]
+part1 :: [String] -> Sum Int
+part1 ls = head (bfsSearch BFSConfig{..})
   where
     grid0 = toGrid ls
     grid = normStartEnd grid0
     neighbours = getNeighbours grid
     goal = getEnd grid0
-    -- source = getStart grid0
-    posSources = M.keys $ M.filter (== 'a') grid
+    -- source = [getStart grid0]
+    source = M.keys $ M.filter (== 'a') grid
+inp :: [String]
 inp= [
     "abaacccccccccccccaaaaaaaccccccccccccccccccccccccccccccccccaaaaaa",
     "abaaccccccccccccccaaaaaaaaaaccccccccccccccccccccccccccccccccaaaa",
