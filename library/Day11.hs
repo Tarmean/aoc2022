@@ -27,7 +27,7 @@ monkey :: Monkey
         "Test:" test:test
         branches:branches { Monkey n items op test branches 0 }
 operation :: (Integer -> Integer)
-    = "new =" l:operationArg op:("+" {(+)}/ "-" {(-)}/ "*" {(*)}/ "/"{div}) r:operationArg {
+    = "new" "=" l:operationArg op:("+" {(+)}/ "-" {(-)}/ "*" {(*)}/ "/"{div}) r:operationArg {
      \x -> op (fromMaybe x l) (fromMaybe x r)
         }
 operationArg :: Maybe Integer 

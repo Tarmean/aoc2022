@@ -42,6 +42,10 @@ extra-deps:
   - git: https://github.com/Tarmean/Peggy
     commit: ae8d7178820bc312777e3ea5c5ec129c6a5e2914
   - happy-1.21.0
+  - git: https://github.com/Tarmean/monus-weighted-search
+    commit: e5d9b9c6e3340477ae2a8eaec4268377bf9e2543
+  - git: https://github.com/Tarmean/level-monad
+    commit: 2ac0f884cf6fdc44943205340bb1b1ae9787893d
 allow-newer: true
 # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git

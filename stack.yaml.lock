@@ -40,6 +40,28 @@ packages:
       size: 8312
   original:
     hackage: happy-1.21.0
+- completed:
+    commit: e5d9b9c6e3340477ae2a8eaec4268377bf9e2543
+    git: https://github.com/Tarmean/monus-weighted-search
+    name: monus-weighted-search
+    pantry-tree:
+      sha256: d880a1afb49f8357b3829db72ed9ea96e1ab2c41cf22f62bdf0c4852861b0349
+      size: 2171
+    version: 0.2.0.0
+  original:
+    commit: e5d9b9c6e3340477ae2a8eaec4268377bf9e2543
+    git: https://github.com/Tarmean/monus-weighted-search
+- completed:
+    commit: 2ac0f884cf6fdc44943205340bb1b1ae9787893d
+    git: https://github.com/Tarmean/level-monad
+    name: level-monad
+    pantry-tree:
+      sha256: 5c22fee0ae6c2f1051c91c3a6236c84ff35b87460f01ecb68d08808aeca64107
+      size: 312
+    version: 0.4.1
+  original:
+    commit: 2ac0f884cf6fdc44943205340bb1b1ae9787893d
+    git: https://github.com/Tarmean/level-monad
 snapshots:
 - completed:
     sha256: 5201b267da5c16bde723e0401eed332c96035edd55250a947089a7d9417b7ecc
