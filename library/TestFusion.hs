@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -ddump-simpl -dsuppress-all -dsuppress-uniques -fforce-recomp #-}
+{-# OPTIONS_GHC -ddump-simpl -dsuppress-all -dsuppress-uniques #-}
 
 module TestFusion (tester) where
 import GHC.Base (build)
