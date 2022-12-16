@@ -51,6 +51,8 @@ library:
   - peggy
   - monus-weighted-search
   - level-monad
+  - logict
+  - fgl
   # - IntervalMap
 
   source-dirs: library
