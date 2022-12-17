@@ -1,7 +1,7 @@
 -- | An example module.
 module Example (main) where
-import qualified Day16
+import qualified Day17
 
 -- | An example function.
 main :: IO ()
-main = Day16.main
+main = Day17.main
